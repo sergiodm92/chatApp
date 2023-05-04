@@ -70,7 +70,6 @@ export function postUser(user) {
   };
 
 
-
   //Traer todos los mensajes
 export const getAllMessages = () => {
   return async (dispatch) => {
