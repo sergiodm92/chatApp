@@ -23,7 +23,9 @@ router.post('/', async (req, res) => {
   const { userId, text } = req.body;
   try {
     let message = {}
-    message = await createMessage(userId, text);
+    newDate = new Date()
+    date = newDate.getTime()
+    message = await createMessage(userId, text, date);
     return res.status(200).send(customResponseSuccess(message));
   } catch (error) {
     console.error(error);
