@@ -4,6 +4,7 @@ import styles from '../styles/Auth.module.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { postLogin } from '../redux/actions';
 
+
 const Auth = () => {
   const [formData, setFormData] = useState({
     name: "",
