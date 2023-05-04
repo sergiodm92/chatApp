@@ -2,7 +2,7 @@ import axios from 'axios'
 import Swal from 'sweetalert2';
 
 //Traer Token de localstorage
-const token = localStorage.getItem("AuthLogin")
+
 
 export const createToast = (icon, title) => {
   const Toast = Swal.mixin({
@@ -50,7 +50,7 @@ export function postUser(user) {
       try {
         const json = await axios.post(`/user/login`, jsonUser);
         if (json.data.status === "ok") {
-          createToast("success", "Se confirmó asistencia correctamente");
+          createToast("success", "ingresó correctamente");
           let response = json.data.data
           localStorage.setItem("AuthLogin", response.token)
           localStorage.setItem("userId", response.id)
