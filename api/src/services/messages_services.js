@@ -1,7 +1,6 @@
 require("dotenv").config();
 const { Message, User } = require("../db");
-const server = require('../app')
-const io = require("socket.io")(server);
+
 
 
 const allMessages = async () => {
@@ -33,19 +32,6 @@ const createMessage = async (userId, text, date) => {
       text: text,
       userId: userId,
       date: date
-    });
-    io.on("connection", (socket) => {
-      console.log("Cliente conectado");
-    
-      // maneja el evento "mensaje-nuevo" enviado por el cliente
-      socket.on("mensaje-nuevo", (data) => {
-        console.log(data.mensaje);
-        // envía el mensaje a todos los clientes conectados
-        io.emit("mensaje-recibido", data);
-    
-        // envía un mensaje específico al cliente que envió el mensaje original
-        socket.emit("reload", "reload");
-      });
     });
     return message;
   } catch (error) {
