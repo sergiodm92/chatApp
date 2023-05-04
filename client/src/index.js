@@ -4,9 +4,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import axios from 'axios';
 import App from './App';
-import store from './redux/store'
+import store from './redux/store';
 
-axios.defaults.baseURL = 'http://localhost:3001'
+
+axios.defaults.baseURL = 'https://chatapp-production-eb2f.up.railway.app/'
+// axios.defaults.baseURL = 'http://localhost:3001/'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

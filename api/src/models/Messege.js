@@ -12,7 +12,6 @@ module.exports = (sequelize) => {
       date: {
         type: DataTypes.BIGINT,
         allowNull: false,
-        defaultValue: Date.now(),
       },
     },
     {

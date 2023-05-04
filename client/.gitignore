@@ -1,8 +1,9 @@
 
 node_modules/
 
-build/
+
 
 npm-debug.log
 
 package-lock.json
+.vercel

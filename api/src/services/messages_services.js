@@ -24,11 +24,12 @@ const allMessages = async () => {
   }
 };
 
-const createMessage = async (userId, text) => {
+const createMessage = async (userId, text, date) => {
   try {
     const message = await Message.create({
       text: text,
       userId: userId,
+      date: date
     });
 
     return message;

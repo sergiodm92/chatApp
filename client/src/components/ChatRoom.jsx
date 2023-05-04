@@ -8,7 +8,7 @@ const Chat = () => {
 
   const dispatch = useDispatch();
   const userId = +localStorage.getItem('userId');
-  const [message, setMessage] = useState({ text: '', userId: userId });
+  const [message, setMessage] = useState({ text: '', userId: userId});
   const messages = useSelector((state) => state.messages);
   const statusPostMessage = useSelector((state) => state.statusPostMessage);
 
@@ -19,10 +19,8 @@ const Chat = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let date = new Date()
-    message.date = date.getTime()
     dispatch(postNewMessage(message));
-    setMessage({ text: '', userId: userId });
+    setMessage({ text: '', userId: userId});
   };
 
   const handleKeyDown = (e) => {
@@ -33,15 +31,12 @@ const Chat = () => {
   };
 
   function getPastelColor(number) {
-    // Creamos un objeto seedrandom con la semilla igual al número de entrada
+
     const random = seedrandom(number.toString());
-  
-    // Generamos valores de color aleatorios en el rango [120, 240) para el hue, y fijos para la saturación y luminosidad
-    const hue = Math.floor(random() * 120) + 120; // El hue va de 120 a 240 para obtener colores pastel
+    const hue = Math.floor(random() * 120) + 120; 
     const saturation = 60;
     const lightness = 80;
   
-    // Convertimos los valores de hue, saturación y luminosidad en una cadena de texto CSS
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
   }
   const setDate = (dateMilisegundos) => {
