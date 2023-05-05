@@ -3,6 +3,9 @@ import styles from '../styles/Chat.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllMessages, postNewMessage, setStatusPostMessage } from '../redux/actions';
 import seedrandom from 'seedrandom';
+import io from 'socket.io-client'
+
+const socket = io('https://chatapp-production-eb2f.up.railway.app/')
 
 const Chat = () => {
 
@@ -11,6 +14,12 @@ const Chat = () => {
   const [message, setMessage] = useState({ text: '', userId: userId});
   const messages = useSelector((state) => state.messages);
   const statusPostMessage = useSelector((state) => state.statusPostMessage);
+
+  socket.on('connected', (data) => {
+    console.log(data);
+    dispatch(getAllMessages());
+    
+  });
 
 
   const handleInputChange = (e) => {
