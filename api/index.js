@@ -4,7 +4,7 @@ const cors = require('cors');
 const { URL_CLIENT } = process.env;
 const io = require('socket.io')(http, {
   cors: {
-    origin: URL_CLIENT,
+    origin: "https://client-sergiodm92.vercel.app/",
     methods: ["GET", "POST"]
   }
 });
