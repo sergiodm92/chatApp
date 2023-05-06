@@ -12,8 +12,8 @@ import seedrandom from "seedrandom";
 import io from "socket.io-client";
 import Picker from "emoji-picker-react";
 
-const socket = io("https://chatapp-production-eb2f.up.railway.app");
-// const socket = io('http://localhost:3001/');
+// const socket = io("https://chatapp-production-eb2f.up.railway.app");
+const socket = io('http://localhost:3001/');
 
 const Chat = () => {
   const statusLoading = useSelector((state)=>state.statusLoading)

@@ -29,9 +29,11 @@ export const setLoading = (status) => {
 export function postUser(user) {
     return async function (dispatch) {
       try {
-        let jsonUser = {name: user.name, password: user.password}
-        const json = await axios.post('/user/register', jsonUser);
-        if (json.data.status === "ok") {
+        const json = await axios.post('/user/register', user);
+        const response = json.data.data
+        localStorage.setItem("AuthLogin", response.token)
+        localStorage.setItem("userId", response.userId)
+        if(response.state){
           createToast("success", "Registered successfully");
         }
         else {
@@ -40,7 +42,7 @@ export function postUser(user) {
 
         return dispatch({
           type: "REGISTER_STATUS",
-          payload: json.data.status
+          payload: response
         })
       }
       catch (err) {
@@ -62,7 +64,7 @@ export function postUser(user) {
           createToast("success", "Logged in successfully");
           let response = json.data.data
           localStorage.setItem("AuthLogin", response.token)
-          localStorage.setItem("userId", response.id)
+          localStorage.setItem("userId", response.userId)
         }
         else createToast("error", "Couldn't login: incorrect name or password");
         console.log(json.data.status)

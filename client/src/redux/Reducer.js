@@ -14,13 +14,13 @@ const rootReducer = (state = initialState, action) => {
         case "REGISTER_STATUS":
             return {
             ...state,
-            messageRegister: action.payload,
-            }
-        case "LOGIN_STATUS":
-            return {
-            ...state,
             messageLogin: action.payload,
             }
+        // case "LOGIN_STATUS":
+        //     return {
+        //     ...state,
+        //     messageLogin: action.payload,
+        //     }
         case "GET_ALL_MESSAGES":
             return {
             ...state,

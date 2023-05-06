@@ -2,37 +2,34 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/Auth.module.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { postLogin, setLoading } from '../redux/actions';
+import { postUser, setLoading } from '../redux/actions';
 
 
 const Auth = () => {
 
   const statusLoading = useSelector((state)=>state.statusLoading)
   const [formData, setFormData] = useState({
-    name: "",
-    password: ""
+    name: ""
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
   let stateLogin = useSelector((state) => state.messageLogin);
 
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(setLoading(true))
-    dispatch(postLogin(formData));
+    dispatch(postUser(formData));
   };
 
   useEffect(() => {
-    if (stateLogin) {
-      if (stateLogin == "ok") {
+      if (stateLogin.state) {
         navigate("/chat");
-      } else dispatch(setLoading(false))
-    }
-    
+      }
+      else dispatch(setLoading(false))
   }, [stateLogin]);
 
   return (
@@ -44,7 +41,7 @@ const Auth = () => {
       <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.formGroup}>
           <label className={styles.label} htmlFor="name">
-            Name:
+            Nick Name:
           </label>
           <input
             className={styles.input}
@@ -57,7 +54,7 @@ const Auth = () => {
             required
           />
         </div>
-        <div className={styles.formGroup}>
+        {/* <div className={styles.formGroup}>
           <label className={styles.label} htmlFor="password">
             Password:
           </label>
@@ -71,14 +68,14 @@ const Auth = () => {
             placeholder="Insert Password"
             required
           />
-        </div>
+        </div> */}
         <button className={styles.btnSubmit} type="submit">
           Sing in
         </button>
       </form>
-        <div className={styles.register}>
+        {/* <div className={styles.register}>
         <p  onClick={()=>navigate('/register')}>Register here</p>
-        </div>
+        </div> */}
       </div>)
       :
       (
