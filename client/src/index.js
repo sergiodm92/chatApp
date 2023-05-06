@@ -7,7 +7,7 @@ import App from './App';
 import store from './redux/store';
 
 
-axios.defaults.baseURL = 'https://chatapp-production-eb2f.up.railway.app/'
+axios.defaults.baseURL = 'https://chatapp-production-eb2f.up.railway.app'
 // axios.defaults.baseURL = 'http://localhost:3001/'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

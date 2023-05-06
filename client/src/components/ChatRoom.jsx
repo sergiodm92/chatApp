@@ -5,7 +5,7 @@ import { getAllMessages, postNewMessage, setStatusPostMessage } from '../redux/a
 import seedrandom from 'seedrandom';
 import io from 'socket.io-client'
 
-const socket = io('https://chatapp-production-eb2f.up.railway.app/')
+const socket = io('https://chatapp-production-eb2f.up.railway.app')
 // const socket = io('http://localhost:3001/')
 
 
