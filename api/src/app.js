@@ -19,7 +19,7 @@ require("./db.js");
 app.name = "API";
 
 const corsOptions = {
-  origin: 'https://chatapp-production-eb2f.up.railway.app/',
+  origin: '*',
 };
 app.use(cors(corsOptions));
 
