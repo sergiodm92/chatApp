@@ -39,7 +39,22 @@ const createMessage = async (userId, text, date) => {
   }
 };
 
+const deleteAll = async() =>{
+  try{
+    const result = await Message.destroy({
+      where: {},
+      truncate: true
+    });
+    return result
+} catch (error) {
+  console.error(error);
+  throw new Error("Error al crear el mensaje");
+}
+}
+
+
 module.exports = {
   allMessages,
   createMessage,
+  deleteAll
 };

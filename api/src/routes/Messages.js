@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { allMessages, createMessage } = require("../services/messages_services");
+const { allMessages, createMessage, deleteAll } = require("../services/messages_services");
 const router = Router();
 
 const {
@@ -30,6 +30,18 @@ router.post('/', async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(400).json(customResponseError({ message: 'Error al crear el mensaje' }));
+  }
+});
+
+app.delete('/', async (req, res) => {
+  try {
+    // Realizar la consulta para eliminar todos los mensajes
+    deleteAll()
+    // Enviar una respuesta adecuada al cliente
+    res.status(200).json({ message: 'Todos los mensajes han sido eliminados' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Ha ocurrido un error al eliminar los mensajes' });
   }
 });
 
