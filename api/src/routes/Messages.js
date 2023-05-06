@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-app.delete('/', async (req, res) => {
+router.delete('/', async (req, res) => {
   try {
     // Realizar la consulta para eliminar todos los mensajes
     deleteAll()
