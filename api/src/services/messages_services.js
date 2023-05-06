@@ -1,6 +1,7 @@
 require("dotenv").config();
 const { Message, User } = require("../db");
 
+
 const allMessages = async () => {
   try {
     const messages_all = await Message.findAll({
@@ -31,8 +32,6 @@ const createMessage = async (userId, text, date) => {
       userId: userId,
       date: date
     });
-    
-
     return message;
   } catch (error) {
     console.error(error);
