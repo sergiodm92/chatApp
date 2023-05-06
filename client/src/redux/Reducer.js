@@ -3,7 +3,8 @@ const initialState = {
     messageRegister: false,
     messageLogin: false,
     messages: [],
-    statusPostMessage: true
+    statusPostMessage: true,
+    statusLoading: false
 }
 
 
@@ -34,6 +35,11 @@ const rootReducer = (state = initialState, action) => {
             return {
             ...state,
             statusPostMessage: false
+            }
+        case "SET_LOADING":
+            return {
+            ...state,
+            statusLoading: action.payload
             }
         case "DELETE_CHAT":
             return{

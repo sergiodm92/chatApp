@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/Auth.module.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { postLogin } from '../redux/actions';
+import { postLogin, setLoading } from '../redux/actions';
 
 
 const Auth = () => {
 
-  const [isLoading, setIsLoading]=useState(false)
+  const statusLoading = useSelector((state)=>state.statusLoading)
   const [formData, setFormData] = useState({
     name: "",
     password: ""
@@ -22,31 +22,23 @@ const Auth = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsLoading(true)
+    dispatch(setLoading(true))
     dispatch(postLogin(formData));
   };
 
   useEffect(() => {
     if (stateLogin) {
       if (stateLogin == "ok") {
-        setIsLoading(false)
         navigate("/chat");
-      } else alert(stateLogin);
+      } else dispatch(setLoading(false))
     }
+    
   }, [stateLogin]);
 
   return (
     <div className={styles.entryContainer}>
-      {isLoading?
+      {!statusLoading?
       (
-        <div className={styles.loadingContainer}>
-          <div className={styles.loadingDot}></div>
-          <div className={styles.loadingDot}></div>
-          <div className={styles.loadingDot}></div>
-          <div className={styles.loadingMessage}>Cargando mensajes...</div>
-        </div>
-      )
-      :(
         <div className={styles.cardLogin}>
       <h1 className={styles.title}>Login</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -88,6 +80,15 @@ const Auth = () => {
         <p  onClick={()=>navigate('/register')}>Register here</p>
         </div>
       </div>)
+      :
+      (
+        <div className={styles.loadingContainer}>
+          <div className={styles.loadingDot}></div>
+          <div className={styles.loadingDot}></div>
+          <div className={styles.loadingDot}></div>
+          <div className={styles.loadingMessage}>Cargando mensajes...</div>
+        </div>
+      )
       }
     </div>
   );

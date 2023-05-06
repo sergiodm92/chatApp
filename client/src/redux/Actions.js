@@ -22,6 +22,10 @@ export const createToast = (icon, title) => {
   });
 };
 
+export const setLoading = (status) => {
+  return ({ type: "SET_LOADING", payload: status });
+};
+
 export function postUser(user) {
     return async function (dispatch) {
       try {
@@ -33,6 +37,7 @@ export function postUser(user) {
         else {
           createToast("error", "No pudo registrarse");
         }
+
         return dispatch({
           type: "REGISTER_STATUS",
           payload: json.data.status
@@ -40,6 +45,10 @@ export function postUser(user) {
       }
       catch (err) {
         createToast("error", "No pudo registrarse");
+        return dispatch({
+          type: "REGISTER_STATUS",
+          payload: 'error'
+        })
       }
   
     }
@@ -56,6 +65,8 @@ export function postUser(user) {
           localStorage.setItem("userId", response.id)
         }
         else createToast("error", "No pudo ingresar name o password incorrectos");
+        console.log(json.data.status)
+        dispatch(setLoading(false))
         return dispatch({
           type: "LOGIN_STATUS",
           payload: json.data.status
@@ -63,7 +74,7 @@ export function postUser(user) {
       }
       catch (err) {
         createToast("error", "No pudo ingresar name o password incorrectos");
-
+        dispatch(setLoading(false))
       }
   
     }
@@ -106,6 +117,7 @@ export const postNewMessage = (message) => {
 export const setStatusPostMessage = () => {
   return ({ type: "SET_STATUS", payload: '' });
 };
+
 
 
   //vaciar chat
