@@ -6,6 +6,8 @@ import seedrandom from 'seedrandom';
 import io from 'socket.io-client'
 
 const socket = io('https://chatapp-production-eb2f.up.railway.app/')
+// const socket = io('http://localhost:3001/')
+
 
 const Chat = () => {
 
@@ -17,6 +19,7 @@ const Chat = () => {
 
   socket.on('connected', (data) => {
     console.log(data);
+    console.log(data)
     dispatch(getAllMessages());
     
   });

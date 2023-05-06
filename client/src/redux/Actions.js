@@ -91,7 +91,7 @@ export const getAllMessages = () => {
 export const postNewMessage = (message) => {
   return async (dispatch) => {
     try {
-      const json = await axios.post(`/messages`, message)
+      const json = await axios.post(`/mensajes`, message)
       return dispatch({
         type: "NEW_MESSAGE",
         payload: json.data.status
