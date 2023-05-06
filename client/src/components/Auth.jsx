@@ -86,7 +86,7 @@ const Auth = () => {
           <div className={styles.loadingDot}></div>
           <div className={styles.loadingDot}></div>
           <div className={styles.loadingDot}></div>
-          <div className={styles.loadingMessage}>Cargando mensajes...</div>
+          <div className={styles.loadingMessage}>Loading...</div>
         </div>
       )
       }

@@ -5,6 +5,7 @@ import {
   deleteChat,
   getAllMessages,
   postNewMessage,
+  setLoading,
   setStatusPostMessage,
 } from "../redux/actions";
 import seedrandom from "seedrandom";
@@ -15,7 +16,7 @@ const socket = io("https://chatapp-production-eb2f.up.railway.app");
 // const socket = io('http://localhost:3001/');
 
 const Chat = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const statusLoading = useSelector((state)=>state.statusLoading)
   const [choosenEmoji, setChoosenEmoji] = useState(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const dispatch = useDispatch();
@@ -76,16 +77,16 @@ const Chat = () => {
 
   useEffect(() => {
     if (statusPostMessage) {
-      setIsLoading(true);
+      dispatch(setLoading(true))
       dispatch(getAllMessages());
-      setIsLoading(false);
+      dispatch(setLoading(false))
       dispatch(setStatusPostMessage());
     }
   }, [statusPostMessage]);
 
   return (
     <div className={styles.chatContainer}>
-      {!isLoading ? (
+      {!statusLoading ? (
         <div className={styles.chatBox}>
           {messages.map((message, i) => (
             <div className={ userId === message.userId ? styles.boxMytext : styles.boxText } key={i} >
@@ -111,7 +112,7 @@ const Chat = () => {
           <div className={styles.loadingDot}></div>
           <div className={styles.loadingDot}></div>
           <div className={styles.loadingDot}></div>
-          <div className={styles.loadingMessage}>Cargando mensajes...</div>
+          <div className={styles.loadingMessage}>Loading...</div>
         </div>
       )}
       <div className={styles.chatInput}>
