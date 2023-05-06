@@ -6,6 +6,8 @@ import { postLogin } from '../redux/actions';
 
 
 const Auth = () => {
+
+  const [isLoading, setIsLoading]=useState(false)
   const [formData, setFormData] = useState({
     name: "",
     password: ""
@@ -20,12 +22,14 @@ const Auth = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true)
     dispatch(postLogin(formData));
   };
 
   useEffect(() => {
     if (stateLogin) {
       if (stateLogin == "ok") {
+        setIsLoading(false)
         navigate("/chat");
       } else alert(stateLogin);
     }
@@ -33,7 +37,18 @@ const Auth = () => {
 
   return (
     <div className={styles.entryContainer}>
-      <h1 className={styles.title}>Bienvenido al Chat</h1>
+      {isLoading?
+      (
+        <div className={styles.loadingContainer}>
+          <div className={styles.loadingDot}></div>
+          <div className={styles.loadingDot}></div>
+          <div className={styles.loadingDot}></div>
+          <div className={styles.loadingMessage}>Cargando mensajes...</div>
+        </div>
+      )
+      :(
+        <div className={styles.cardLogin}>
+      <h1 className={styles.title}>Login</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.formGroup}>
           <label className={styles.label} htmlFor="name">
@@ -66,10 +81,14 @@ const Auth = () => {
           />
         </div>
         <button className={styles.btnSubmit} type="submit">
-          Ingresar al chat
+          Sing in
         </button>
       </form>
-      <p className={styles.register} onClick={()=>navigate('/register')}>Register here</p>
+        <div className={styles.register}>
+        <p  onClick={()=>navigate('/register')}>Register here</p>
+        </div>
+      </div>)
+      }
     </div>
   );
 };

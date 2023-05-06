@@ -104,6 +104,48 @@ export const postNewMessage = (message) => {
 };
 
 export const setStatusPostMessage = () => {
-
   return ({ type: "SET_STATUS", payload: '' });
 };
+
+
+  //vaciar chat
+export const deleteChat = () => {
+  return (dispatch) => {
+    try {
+      Swal.fire({
+        title: "Vaciar Chat",
+        text: "¿Esta seguro que desea vaciar el chat?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Estoy seguro",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#007bff",
+        cancelButtonColor: "#ddd",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const json = await axios.delete(`/messages`)
+          createToast(
+            "success",
+            "¡Listo! Se vacio correctamente el chat"
+          );
+          return dispatch({
+            type: "DELETE_CHAT",
+            payload: json.data.data
+          })
+        } else if (
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          createToast(
+            "error",
+            "No se vacio el Chat"
+          );
+        }
+      });
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+};
+  
+  

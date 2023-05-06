@@ -35,6 +35,11 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             statusPostMessage: false
             }
+        case "DELETE_CHAT":
+            return{
+            ...state,
+            statusPostMessage: true
+            }
         default:
             return state;
             }

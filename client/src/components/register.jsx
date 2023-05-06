@@ -42,6 +42,7 @@ const Register = () => {
 
   return (
     <div className={styles.entryContainer}>
+      <div className={styles.cardRegister}>
       <h1 className={styles.title}>Register</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
@@ -93,6 +94,7 @@ const Register = () => {
           Sign up
         </button>
       </form>
+      </div>
     </div>
   );
 };
