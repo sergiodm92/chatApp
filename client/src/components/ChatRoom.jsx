@@ -118,7 +118,7 @@ const Chat = () => {
       <div className={styles.chatInput}>
         <input
           type="text"
-          placeholder="Escribe tu mensaje aquí"
+          placeholder="Write your message here"
           id="text"
           name="text"
           value={message.text}
@@ -145,7 +145,7 @@ const Chat = () => {
         )}
         {choosenEmoji && <p></p>}
         <button onClick={handleSubmit} className={styles.sendButton}>
-          Enviar
+          Send
         </button>
         <button className={styles.deleteButton} onClick={handleDelete}>
           🗑

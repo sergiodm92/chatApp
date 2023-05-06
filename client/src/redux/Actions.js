@@ -32,10 +32,10 @@ export function postUser(user) {
         let jsonUser = {name: user.name, password: user.password}
         const json = await axios.post('/user/register', jsonUser);
         if (json.data.status === "ok") {
-          createToast("success", "Se registró correctamente");
+          createToast("success", "Registered successfully");
         }
         else {
-          createToast("error", "No pudo registrarse");
+          createToast("error", "Couldn't register");
         }
 
         return dispatch({
@@ -44,7 +44,7 @@ export function postUser(user) {
         })
       }
       catch (err) {
-        createToast("error", "No pudo registrarse");
+        createToast("error", "Couldn't register");
         return dispatch({
           type: "REGISTER_STATUS",
           payload: 'error'
@@ -59,12 +59,12 @@ export function postUser(user) {
       try {
         const json = await axios.post(`/user/login`, jsonUser);
         if (json.data.status === "ok") {
-          createToast("success", "ingresó correctamente");
+          createToast("success", "Logged in successfully");
           let response = json.data.data
           localStorage.setItem("AuthLogin", response.token)
           localStorage.setItem("userId", response.id)
         }
-        else createToast("error", "No pudo ingresar name o password incorrectos");
+        else createToast("error", "Couldn't login: incorrect name or password");
         console.log(json.data.status)
         dispatch(setLoading(false))
         return dispatch({
@@ -73,7 +73,7 @@ export function postUser(user) {
         })
       }
       catch (err) {
-        createToast("error", "No pudo ingresar name o password incorrectos");
+        createToast("error", "Couldn't login: incorrect name or password");
         dispatch(setLoading(false))
       }
   
@@ -121,43 +121,43 @@ export const setStatusPostMessage = () => {
 
 
   //vaciar chat
-export const deleteChat = () => {
-  return (dispatch) => {
-    try {
-      Swal.fire({
-        title: "Vaciar Chat",
-        text: "¿Esta seguro que desea vaciar el chat?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Estoy seguro",
-        cancelButtonText: "Cancelar",
-        confirmButtonColor: "#007bff",
-        cancelButtonColor: "#ddd",
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          const json = await axios.delete(`/messages`)
-          createToast(
-            "success",
-            "¡Listo! Se vacio correctamente el chat"
-          );
-          return dispatch({
-            type: "DELETE_CHAT",
-            payload: json.data.data
-          })
-        } else if (
-          result.dismiss === Swal.DismissReason.cancel
-        ) {
-          createToast(
-            "error",
-            "No se vacio el Chat"
-          );
-        }
-      });
-    }
-    catch (error) {
-      console.log(error);
-    }
+  export const deleteChat = () => {
+    return (dispatch) => {
+      try {
+        Swal.fire({
+          title: "Empty Chat",
+          text: "Are you sure you want to empty the chat?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, I'm sure",
+          cancelButtonText: "Cancel",
+          confirmButtonColor: "#007bff",
+          cancelButtonColor: "#ddd",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            const json = await axios.delete(`/messages`);
+            createToast(
+              "success",
+              "Done! The chat was emptied successfully."
+            );
+            return dispatch({
+              type: "DELETE_CHAT",
+              payload: json.data.data
+            });
+          } else if (
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+            createToast(
+              "error",
+              "Chat was not emptied."
+            );
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
   };
-};
+  
   
   
