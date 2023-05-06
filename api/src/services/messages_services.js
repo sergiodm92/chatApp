@@ -1,7 +1,6 @@
 require("dotenv").config();
 const { Message, User } = require("../db");
 
-
 const allMessages = async () => {
   try {
     const messages_all = await Message.findAll({
@@ -15,7 +14,7 @@ const allMessages = async () => {
         text: msg.text,
         date: msg.date,
         user: msg.user.name,
-        userId: msg.userId
+        userId: msg.userId,
       };
     });
     return mensagges;
@@ -30,7 +29,7 @@ const createMessage = async (userId, text, date) => {
     const message = await Message.create({
       text: text,
       userId: userId,
-      date: date
+      date: date,
     });
     return message;
   } catch (error) {
@@ -39,22 +38,21 @@ const createMessage = async (userId, text, date) => {
   }
 };
 
-const deleteAll = async() =>{
-  try{
+const deleteAll = async () => {
+  try {
     const result = await Message.destroy({
       where: {},
-      truncate: true
+      truncate: true,
     });
-    return result
-} catch (error) {
-  console.error(error);
-  throw new Error("Error al crear el mensaje");
-}
-}
-
+    return result;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error al crear el mensaje");
+  }
+};
 
 module.exports = {
   allMessages,
   createMessage,
-  deleteAll
+  deleteAll,
 };

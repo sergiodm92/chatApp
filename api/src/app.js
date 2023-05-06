@@ -22,13 +22,12 @@ const corsOptions = {
   origin: '*',
 };
 app.use(cors(corsOptions));
-
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
 app.use(morgan("dev"));
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Origin", "*"); 
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",
@@ -37,7 +36,6 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
   next();
 });
-
 
 app.post('/mensajes',async(req, res) => {
   const { userId, text } = req.body;
@@ -52,16 +50,10 @@ app.post('/mensajes',async(req, res) => {
     console.error(error);
     return res.status(400).json(customResponseError({ message: 'Error al crear el mensaje' }));
   }
-
-
 });
 
 app.use("/", routes);
-
-
-//Error catching endware.
 app.use((err, req, res, next) => {
-  // eslint-disable-line no-unused-vars
   const status = err.status || 500;
   const message = err.message || err;
   console.error(err);

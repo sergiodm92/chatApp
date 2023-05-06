@@ -3,7 +3,7 @@ require("dotenv").config();
 const { User } = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const tokenSecret = process.env.TOKEN_SECRET
+const tokenSecret = process.env.TOKEN_SECRET;
 
 const authRegister = async (data) => {
   const { name, password } = data;
@@ -51,7 +51,7 @@ const authLogin = async (data) => {
     },
     tokenSecret
   );
-  let response = {token: token, id: user.id}
+  let response = { token: token, id: user.id };
   return response;
 };
 
