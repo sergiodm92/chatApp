@@ -1,4 +1,4 @@
-const { Router } = require("express");
+const { Router, response } = require("express");
 
 const { authRegister, authLogin } = require("../services/user_services");
 
@@ -7,17 +7,7 @@ const {
   customResponseSuccess,
 } = require("../utils/customAPIResponse");
 
-const Joi = require("@hapi/joi");
 
-const schemaRegister = Joi.object({
-  name: Joi.string().min(6).max(255).required(),
-  password: Joi.string().min(6).max(1024).required(),
-});
-
-const schemaLogin = Joi.object({
-  name: Joi.string().min(6).max(255).required(),
-  password: Joi.string().min(6).max(1024).required(),
-});
 
 const route = Router();
 
@@ -41,21 +31,22 @@ route.post("/login", async (req, res) => {
 });
 
 route.post("/register", async (req, res) => {
-  const { error } = schemaRegister.validate(req.body);
-  if (error)
-    return res.status(400).json(customResponseError(error.details[0].message));
-
   try {
-    const user = await authRegister(req.body);
-    if (typeof user !== "string") {
-      res.status(201).json(customResponseSuccess(user));
-    } else {
-      res
-        .status(400)
-        .json(customResponseError("No se ha podido registrar, reintente..."));
+    if (!req.body.name) {
+      res.status(400).json(customResponseError("El campo 'name' es obligatorio"));
+      return;
+    }
+    const data = await authRegister(req.body);
+    if(data.state){
+      const response = { token: "Osjqbgk1brk1krncblqjgow91827461", state: true, userId: data.user.id };
+      res.status(201).json(customResponseSuccess(response));
+    } 
+    else {
+      const response = { token: false, state: "El usuario ya está registrado" };
+      res.status(200).json(customResponseSuccess(response));
     }
   } catch (error) {
-    res.status(400).json(customResponseError(error));
+    res.status(400).json(customResponseError("error"));
   }
 });
 

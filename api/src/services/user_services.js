@@ -6,29 +6,28 @@ const bcrypt = require("bcrypt");
 const tokenSecret = process.env.TOKEN_SECRET;
 
 const authRegister = async (data) => {
-  const { name, password } = data;
-  const isUserExist = await User.findOne({
-    where: { name },
-  });
-  if (isUserExist) {
-    throw "Usuario ya registrado";
-  }
-
-  const salt = await bcrypt.genSalt(10);
-  const pass = await bcrypt.hash(password, salt);
-
-  const user = await User.create({
-    name,
-    password: pass,
-  });
-
   try {
-    const savedUser = await user.save();
-    return savedUser;
+    const name = data.name;
+    const userdb = await User.findOne({
+      where: { name },
+    });
+    if (userdb) {
+      return { user: userdb, state: true };
+    } else {
+      const user = await User.create({
+        name
+      })
+      const savedUser = await user.save();
+      const userDB = await User.findOne({
+        where: { name },
+      });
+      return { user: userDB, state: true };
+    }
   } catch (error) {
-    throw error;
+    return false
   }
 };
+
 
 const authLogin = async (data) => {
   const { name, password } = data;
